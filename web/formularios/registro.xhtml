@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+    <h:body>
+        <ui:composition template="./formstemplate.xhtml">
+            <ui:define name="content">
+                <h:form id="mainform" style="font-size: small">
+                    <p:layout style="height:600px;" id="layout">  
+                        <p:layoutUnit position="west" resizable="false" size="300">  
+                            <p:menu> 
+                                <p:menuitem value="Datos iniciales del Cliente" outcome="inicial"  /> 
+                                <p:menuitem value="Información de Productos" outcome="productos"/> 
+                                <p:menuitem value="Datos adicionales del Cliente" outcome="cliente"/> 
+                                <p:menuitem value="Registro de la llamada" outcome="registro" />
+                            </p:menu> 
+                        </p:layoutUnit>  
+
+                        <p:layoutUnit id="unit" position="center">  
+                            <h:form title="Registrar llamada" id="form">
+                                <h:panelGrid id="panelLlamada" columns="3" cellpadding="10">
+                                    <h:outputText value="Categoría: " />  
+                                    <h:selectOneMenu id="categoria" value="#{registroBean.selectedCategoria}"
+                                                     required="true"
+                                                     requiredMessage="Debe seleccionar una categoría válida"
+                                                     style="width: 400px">  
+                                        <f:selectItem itemLabel="Seleccione categoria" itemValue="" />
+                                        <f:selectItems value ="#{registroBean.categorias}"/>  
+                                        <p:ajax update="definicion"  
+                                                listener="#{registroBean.onCategoriaChange()}" />
+                                    </h:selectOneMenu> 
+                                    <p:message id="categoriaMessage" for="categoria" />
+
+                                    <h:outputText value="Definición: " />  
+                                    <h:selectOneMenu id="definicion" value="#{registroBean.selectedDefinicion}"
+                                                     required="true"
+                                                     requiredMessage="Debe seleccionar una categoría válida"
+                                                     style="width: 400px"> 
+                                        <f:selectItem itemLabel="Seleccionar definición" itemValue="" />  
+                                        <f:selectItems value ="#{registroBean.definiciones}"/>  
+                                        <p:ajax update="definicion" listener="#{registroBean.onCategoriaChange()}" />
+                                    </h:selectOneMenu>
+                                    <p:message id="definicionMessage" for="definicion" />
+
+                                    <h:outputText value="Observaciones: " /> 
+                                    <p:inputTextarea rows="6" cols="50" maxlength="500" 
+                                                     value="#{registroBean.call.observacion}" 
+                                                     style="width: 400px" />
+                                    <br />
+                                </h:panelGrid>
+                                <br/>
+                                <br/>
+                                <center>
+                                    <p:commandButton value="Guardar" update="panelLlamada" id="ajax"  
+                                                     actionListener="#{registroBean.guardarRegistroLlamada()}" 
+                                                     styleClass="ui-priority-primary"/> 
+                                </center>
+                                <p:blockUI block=":mainform:unit" trigger="ajax">
+                                    Espere mientras se guardan los cambios... <br />  
+                                    <p:graphicImage value="/images/ajax-loader.gif" height="100px" width="100px"/>  
+                                </p:blockUI> 
+                            </h:form>
+                        </p:layoutUnit> 
+                    </p:layout>
+                    <h:inputHidden value="#{accessBean.idUsuario}" />
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

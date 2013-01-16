@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+    <h:body>
+        <ui:composition template="./formstemplate.xhtml">
+            <ui:define name="content">
+
+                <h:form style="font-size: small">
+                    <p:layout style="height:600px;" id="layout">  
+                        <p:layoutUnit position="west" resizable="false" size="300">  
+                            <p:menu> 
+                                <p:menuitem value="Datos iniciales del Cliente" outcome="inicial"  /> 
+                                <p:menuitem value="Información de Productos" outcome="productos"/> 
+                                <p:menuitem value="Datos adicionales del Cliente" outcome="cliente"/> 
+                                <p:menuitem value="Registro de la llamada" outcome="registro" />
+                            </p:menu> 
+                        </p:layoutUnit>  
+
+                        <p:layoutUnit position="center">  
+                            <h:form title="Cliente">
+                                <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                                <h:panelGrid id="panelCliente" columns="4" cellpadding="10">
+                                    <br />
+                                    <h:outputText value="Cedula o RUC: "/>  
+                                    <p:inputText id="cedula"
+                                                 value="#{clienteBean.cedula}" 
+                                                 required="true"
+                                                 requiredMessage="Debe ingresar un número de cédula" 
+                                                 style="width: 200px"
+                                                 maxlength="13"
+                                                 validatorMessage="El numero de cédula o ruc es inválido">
+                                        <f:validateLength maximum="13" minimum="10" />
+                                        <p:ajax update="panelCliente" event="blur" />
+                                    </p:inputText>
+                                    <p:message id="cedulaMessage" for="cedula" />
+
+                                    <br />
+                                    <h:outputText value="Nombre: "/>  
+                                    <p:inputText id="nombre" value="#{clienteBean.cliente.nombreCliente}"
+                                                 required="true"
+                                                 requiredMessage="Debe ingresar un nombre"
+                                                 maxlength="200"
+                                                 style="width: 200px" > 
+                                        <f:validateLength minimum="5" />
+                                        <p:ajax update="nombreMessage" event="blur" />
+                                    </p:inputText>
+                                    <p:message id="nombreMessage" for="nombre" />
+                                </h:panelGrid>
+                                <br />
+                                <br />
+                                <center>
+                                    <p:commandButton value="Guardar" update="panelCliente" id="ajax"  
+                                                     actionListener="#{clienteBean.openProductos()}" 
+                                                     styleClass="ui-priority-primary"/> 
+                                </center>
+                            </h:form>
+                        </p:layoutUnit> 
+                    </p:layout>
+                    <h:inputHidden value="#{accessBean.idUsuario}" />
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

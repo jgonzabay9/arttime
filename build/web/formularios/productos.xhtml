@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+    <h:body>
+        <ui:composition template="./formstemplate.xhtml">
+            <ui:define name="content">
+                <h:form style="font-size: small">
+                    <p:layout style="min-height: 400px;" id="layout">  
+                        <p:layoutUnit position="west" resizable="false" size="300">  
+                            <p:menu> 
+                                <p:menuitem value="Datos iniciales del Cliente" outcome="inicial"  /> 
+                                <p:menuitem value="Información de Productos" outcome="productos"/> 
+                                <p:menuitem value="Datos adicionales del Cliente" outcome="cliente"/> 
+                                <p:menuitem value="Registro de la llamada" outcome="registro" />
+                            </p:menu> 
+                        </p:layoutUnit>  
+
+                        <p:layoutUnit position="center" id="centerLayout" >  
+                            <center>
+                                <h:form title="Productos">
+                                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                                    <h:panelGrid columns="1">
+                                        <p:fieldset legend="Productos">  
+                                            <p:dataTable id="productsList" var="products" value="#{productosBean.productos}" 
+                                                         selection="#{productosBean.selectedProduct}" selectionMode="single"
+                                                         rowKey="#{products.idProducto}" >  
+
+                                                <p:column headerText="Nombre" style="width: 400px">  
+                                                    <h:outputText value="#{products.nombreProducto}" />  
+                                                </p:column>  
+
+                                                <p:column headerText="Valor Unitario" style="width: 200px">  
+                                                    <h:outputText value="#{products.valorUnitario}" />  
+                                                </p:column>  
+
+                                                <p:column headerText="Stock" style="width: 200px">  
+                                                    <h:outputText value="#{products.stock}" />  
+                                                </p:column> 
+
+                                                <p:column headerText="Cantidad" style="width: 150px" >
+                                                    <p:inputText value="#{products.cantidad}"/>
+                                                </p:column>
+
+                                                <p:column headerText="Agregar">  
+                                                    <p:commandButton value="+" actionListener="#{productosBean.addToCart()}" ajax="false" />
+                                                </p:column>
+                                            </p:dataTable> 
+
+                                            <br />
+
+                                            <p:commandButton id="viewButton" value="Info" icon="ui-icon-search"  
+                                                             update="displaySingle selectedProducts" oncomplete="singleCarDialog.show()" />
+                                        </p:fieldset>
+                                        
+                                        <p:fieldset id="selectedProducts" legend="Carrito de compras" style="margin-top:20px">
+
+                                            <p:dataTable id="shoppingCart" var="selProducts" value="#{productosBean.carrito}"
+                                                         selection="#{productosBean.carritoProduct}" selectionMode="single"
+                                                         rowKey="#{selProducts.idProducto}" > 
+                                                
+                                                <p:column headerText="Cantidad" style="width: 50px" >
+                                                    <p:inplace id="cantidadInplace" effectSpeed="fast" editor="true">  
+                                                        <p:inputText value="#{selProducts.cantidad}" /> 
+                                                    </p:inplace>
+                                                </p:column>
+
+                                                <p:column headerText="Nombre" style="width: 400px">
+                                                    <h:outputText value="#{selProducts.nombreProducto}" />
+                                                </p:column>
+
+                                                <p:column headerText="Valor Unitario" style="width: 200px">  
+                                                    <h:outputText value="#{selProducts.valorUnitario}" />  
+                                                </p:column>  
+
+                                                <p:column headerText="Valor Total" style="width: 200px">  
+                                                    <h:outputText value="#{selProducts.subtotal}" />  
+                                                </p:column> 
+
+                                                <p:column headerText="Quitar">  
+                                                    <p:commandButton value="-" actionListener="#{productosBean.removeFromCart()}" ajax="false" />
+                                                </p:column>
+                                            </p:dataTable>
+                                            <br />
+                                            <p align="RIGHT">
+                                                <h:outputLabel value="Total de la compra: #{productosBean.totalCarrito}" />
+                                            </p>
+                                            <br />
+                                            <p:commandButton id="saveButton" value="Guardar" 
+                                                             actionListener="#{productosBean.completarVenta()}"/>
+                                        </p:fieldset>   
+                                    </h:panelGrid>
+                                    <p:dialog id="dialog" header="Detalles del producto" widgetVar="singleCarDialog" resizable="false"  
+                                              showEffect="fade" hideEffect="explode" style="max-width: 500px">  
+
+                                        <h:panelGrid id="displaySingle" columns="2" cellpadding="4">
+
+                                            <f:facet name="header">  
+                                                <p:graphicImage value="#{productosBean.selectedProduct.imagen}"/>  
+                                            </f:facet>  
+
+                                            <h:outputText value="Codigo producto: " />  
+                                            <h:outputText value="#{productosBean.selectedProduct.codigoProducto}" />  
+
+                                            <h:outputText value="Descripción: " />  
+                                            <h:outputText value="#{productosBean.selectedProduct.nombreProducto}" />  
+
+                                            <h:outputText value="Precio unitario: " />  
+                                            <h:outputText value="#{productosBean.selectedProduct.valorUnitario}" /> 
+
+                                            <h:outputText value="Stock: " />  
+                                            <h:outputText value="#{productosBean.selectedProduct.stock}" />  
+
+                                            <h:outputText value="Características: " />  
+                                            <h:outputText value="#{productosBean.selectedProduct.caracteristicas}" />  
+                                        </h:panelGrid>  
+                                    </p:dialog>
+                                </h:form> 
+                            </center>
+                        </p:layoutUnit> 
+                    </p:layout>
+                    <h:inputHidden value="#{accessBean.idUsuario}" />
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

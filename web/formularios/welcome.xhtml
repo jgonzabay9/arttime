@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+    <h:body>
+        <ui:composition template="./formstemplate.xhtml">
+            <ui:define name="content">
+
+                <h:form style="font-size: small">
+                    <p:layout style="height:600px;" id="layout">  
+                        <p:layoutUnit position="west" resizable="false" size="300">  
+                            <p:menu> 
+                                <p:menuitem value="Datos iniciales del Cliente" outcome="inicial"  /> 
+                                <p:menuitem value="Información de Productos" outcome="productos"/> 
+                                <p:menuitem value="Datos adicionales del Cliente" outcome="cliente"/> 
+                                <p:menuitem value="Registro de la llamada" outcome="registro" />
+                            </p:menu> 
+                        </p:layoutUnit>  
+
+                        <p:layoutUnit position="center">  
+                            <h:form>
+                                <center>
+                                    <p:imageSwitch effect="zoom">  
+                                        <ui:repeat value="#{indexBean.images}" var="image">
+                                            <p:graphicImage value="#{image}" />
+                                        </ui:repeat>
+                                    </p:imageSwitch>
+                                </center>
+                            </h:form>
+                        </p:layoutUnit> 
+                    </p:layout>
+                    <h:inputHidden value="#{accessBean.idUsuario}" />
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

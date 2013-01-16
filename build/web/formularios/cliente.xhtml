@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+    <h:body>
+        <ui:composition template="./formstemplate.xhtml">
+            <ui:define name="content">
+                <h:form style="font-size: small">
+                    <p:layout style="min-height: 400px;" id="layout">  
+                        <p:layoutUnit position="west" resizable="false" size="300">  
+                            <p:menu> 
+                                <p:menuitem value="Datos iniciales del Cliente" outcome="inicial"  /> 
+                                <p:menuitem value="Información de Productos" outcome="productos"/> 
+                                <p:menuitem value="Datos adicionales del Cliente" outcome="cliente"/> 
+                                <p:menuitem value="Registro de la llamada" outcome="registro" />
+                            </p:menu> 
+                        </p:layoutUnit>  
+
+                        <p:layoutUnit position="center">  
+                            <h:form title="Cliente">
+                                <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                                <h:panelGrid id="panelCliente" columns="4" cellpadding="10">
+                                    <br />
+                                    <h:outputText value="Cedula: "/>  
+                                    <h:outputText value="Cedula o RUC: "/>  
+                                    <p:inputText id="cedula"
+                                                 value="#{clienteBean.cedula}" 
+                                                 required="true"
+                                                 requiredMessage="Debe ingresar un número de cédula" 
+                                                 style="width: 200px"
+                                                 maxlength="13"
+                                                 validatorMessage="El numero de cédula o ruc es inválido">
+                                        <f:validateLength maximum="13" minimum="10" />
+                                        <p:ajax update="panelCliente" event="blur" />
+                                    </p:inputText>
+                                    <p:message id="cedulaMessage" for="cedula" />
+
+                                    <br />
+                                    <h:outputText value="Nombre: "/>  
+                                    <p:inputText id="nombre" value="#{clienteBean.cliente.nombreCliente}"
+                                                 required="true"
+                                                 requiredMessage="Debe ingresar un nombre"
+                                                 maxlength="200"
+                                                 style="width: 200px" > 
+                                        <f:validateLength minimum="5" />
+                                        <p:ajax update="nombreMessage" event="blur" />
+                                    </p:inputText>
+                                    <p:message id="nombreMessage" for="nombre" />
+
+                                    <br />
+                                    <h:outputText value="Telefono: "/>  
+                                    <p:inputMask id="telefono" value="#{clienteBean.cliente.telefono}" mask="9999999"
+                                                 required="true"
+                                                 requiredMessage="Debe ingresar un teléfono"
+                                                 style="width: 200px" />
+                                    <p:message id="telefonoMessage" for="telefono" />
+
+                                    <br />
+                                    <h:outputText value="Celular: "/>  
+                                    <p:inputMask id="celular" value="#{clienteBean.cliente.celular}" mask="9999999999"
+                                                 required="true"
+                                                 requiredMessage="Debe ingresar un celular"
+                                                 style="width: 200px" />  
+                                    <p:message id="celularMessage" for="celular" />
+
+                                    <br />
+                                    <h:outputText value="Sector o barrio: "/>  
+                                    <p:inputText id="sector" value="#{clienteBean.cliente.sector}"
+                                                 required="true"
+                                                 requiredMessage="Debe ingresar una calle"
+                                                 maxlength="200"
+                                                 style="width: 200px" > 
+                                        <p:ajax update="sectorMessage" event="blur" />
+                                    </p:inputText>
+                                    <p:message id="sectorMessage" for="sector" />
+
+                                    <br />
+                                    <h:outputText value="Calle principal: "/>  
+                                    <p:inputText id="cprincipal" value="#{clienteBean.cliente.callePrincipal}"
+                                                 required="true"
+                                                 requiredMessage="Debe ingresar una calle"
+                                                 maxlength="200"
+                                                 style="width: 200px" > 
+                                        <p:ajax update="cprincipalMessage" event="blur" />
+                                    </p:inputText>
+                                    <p:message id="cprincipalMessage" for="cprincipal" />
+
+                                    <br />
+                                    <h:outputText value="Numero: "/>  
+                                    <p:inputText id="numero" value="#{clienteBean.cliente.numeroEdificio}"
+                                                 required="true"
+                                                 requiredMessage="Debe ingresar una calle"
+                                                 maxlength="200"
+                                                 style="width: 200px" > 
+                                        <p:ajax update="numeroMessage" event="blur" />
+                                    </p:inputText>
+                                    <p:message id="numeroMessage" for="numero" />
+
+                                    <br />
+                                    <h:outputText value="Calle secundaria: "/>  
+                                    <p:inputText id="csecundaria" value="#{clienteBean.cliente.calleSecundaria}"
+                                                 required="true"
+                                                 requiredMessage="Debe ingresar una calle"
+                                                 maxlength="200"
+                                                 style="width: 200px" > 
+                                        <p:ajax update="csecundariaMessage" event="blur" />
+                                    </p:inputText>
+                                    <p:message id="csecundariaMessage" for="csecundaria" />
+
+                                    <br />
+                                    <h:outputText value="Referencia: "/>  
+                                    <p:inputText id="referencia" value="#{clienteBean.cliente.referencia}"
+                                                 required="true"
+                                                 requiredMessage="Debe ingresar una calle"
+                                                 maxlength="500"
+                                                 style="width: 200px" > 
+                                        <p:ajax update="referenciaMessage" event="blur" />
+                                    </p:inputText>
+                                    <p:message id="referenciaMessage" for="referencia" />
+
+                                    <br />
+                                    <h:outputText value="Tipo de dirección: "/>  
+                                    <h:selectOneMenu id="tipoDireccion" value="#{clienteBean.cliente.tipoDireccion}"
+                                                     required="true"
+                                                     requiredMessage="Debe seleccionar un tipo válido"
+                                                     style="width: 200px" >  
+                                        <f:selectItem itemLabel="Seleccionar un tipo" itemValue="" />  
+                                        <f:selectItem itemLabel="DOMICILIO" itemValue="DOMICILIO" />  
+                                        <f:selectItem itemLabel="TRABAJO" itemValue="TRABAJO" />  
+                                    </h:selectOneMenu>
+                                    <p:message id="tipoDireccionMessage" for="tipoDireccion" />
+
+                                    <br />
+                                    <h:outputText value="Medio por el que se entero: "/>  
+                                    <h:selectOneMenu id="medio" value="#{clienteBean.cliente.medio}"
+                                                     style="width: 200px" >  
+                                        <f:selectItem itemLabel="Seleccionar un medio" itemValue="" />  
+                                        <f:selectItem itemLabel="ACTUALIZACION DE CUENTA" itemValue="ACTUALIZACION DE CUENTA" />  
+                                        <f:selectItem itemLabel="VOLANTE" itemValue="VOLANTE" />  
+                                        <f:selectItem itemLabel="OTRO" itemValue="OTRO" />  
+                                    </h:selectOneMenu> 
+                                    <p:message id="medioMessage" for="medio" />
+
+                                    <br />
+                                    <h:outputText value="Tipo de Tarjeta: "/>  
+                                    <p:selectOneRadio id="tipoTarjeta" value="#{clienteBean.cliente.tipoTarjeta}"
+                                                      required="true"
+                                                      requiredMessage="Debe seleccionar un tipo de tarjeta"
+                                                      style="width: 200px" > 
+                                        <f:selectItem itemLabel="MASTER CARD" itemValue="MASTER CARD" />  
+                                        <f:selectItem itemLabel="VISA" itemValue="VISA" />  
+                                        <f:selectItem itemLabel="DINERS CLUB" itemValue="DINERS CLUB" />  
+                                        <f:selectItem itemLabel="DISCOVER" itemValue="DISCOVER" />  
+                                    </p:selectOneRadio>  
+                                    <p:message id="tipoTarjetaMessage" for="tipoTarjeta" />
+
+                                    <br />
+                                    <h:outputText value="Número de Tarjeta: "/>  
+                                    <p:inputText id="tarjeta" value="#{clienteBean.cliente.numeroTarjeta}"
+                                                 required="true" 
+                                                 requiredMessage="Debe ingresar un número de tarjeta"
+                                                 style="width: 200px" /> 
+                                    <p:message id="tarjetaMessage" for="tarjeta" />  
+
+                                    <br />
+                                    <h:outputText value="Caducidad Tarjeta (mm/aa): " />  
+                                    <p:inputMask id="caducidad" value="#{clienteBean.cliente.caducidadTarjeta}" mask="99/99" 
+                                                 required="true"
+                                                 requiredMessage="Debe ingresar una fecha de caducidad"
+                                                 style="width: 200px" />
+                                    <p:message id="caducidadMessage" for="caducidad" />
+
+                                    <br />
+                                    <h:outputText value="Codigo de seguridad: "/>  
+                                    <p:inputMask id="codigo" value="#{clienteBean.cliente.codigoSeguridad}"
+                                                 mask="999"
+                                                 required="true" 
+                                                 requiredMessage="Debe ingresar un código de seguridad"
+                                                 style="width: 200px" /> 
+                                    <p:message id="codigoMessage" for="codigo" />
+
+                                    <br />
+                                    <h:outputText value="Nombre del plastico: "/>  
+                                    <p:inputText id="nombrePlastico" value="#{clienteBean.cliente.nombrePlastico}"
+                                                 required="true" 
+                                                 requiredMessage="Debe ingresar un nombre"
+                                                 style="width: 200px" /> 
+                                    <p:message id="nombrePlasticoMessage" for="nombrePlastico" />
+
+                                </h:panelGrid>
+                                <center>
+                                    <p:commandButton value="Guardar" update="panelCliente" id="ajax"  
+                                                     actionListener="#{clienteBean.guardarCliente()}" 
+                                                     styleClass="ui-priority-primary"/> 
+                                </center>
+                            </h:form>
+                        </p:layoutUnit> 
+                    </p:layout>
+                    <h:inputHidden value="#{accessBean.idUsuario}" />
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

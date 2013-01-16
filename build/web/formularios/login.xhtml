@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+    <h:body>
+        <ui:composition template="../blanktemplate.xhtml">
+            <ui:define name="content">
+                <h:form style="font-size: small">
+                    <center>
+                        <b>
+                            <h:outputLabel value="Iniciar Sesión" style="font-size: larger;" />
+                        </b>
+                        <br />
+                        <br />
+                        <table>   
+                            <tr>
+                                <td style="width: 200px">
+                                    <h:outputLabel for="username" value="Nombre de usuario: " />  
+                                </td>
+                                <td>
+                                    <p:inputText id="username" value="#{loginBean.userName}" label="Nombre de usuario" 
+                                                 required="true"
+                                                 requiredMessage="Debe ingresar un nombre de usuario"/>  
+                                </td>
+                                <td>
+                                    <p:message id="usernameMessage" for="username" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 200px">
+                                    <h:outputLabel for="password" value="Contraseña: " />  
+                                </td>
+                                <td>
+                                    <p:password id="password" value="#{loginBean.password}" required="true" label="Contraseña"/>  
+                                </td>
+                                <td>
+                                    <p:message id="passwordMessage" for="password" />
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                        <h:outputLabel id="errorLogin" value="#{loginBean.errorMessage}" style="color: darkred" />
+                        <br />
+                        <br />
+                        <center>
+                            <p:commandButton value="Iniciar Sesión" actionListener="#{loginBean.logIn()}" update="errorLogin" />
+                        </center>
+                        <br />
+
+                        <h:outputLabel value="* Cuide sus claves de acceso: No las preste, informe o ponga a disposición de terceros" />
+                    </center>
+                </h:form>      
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

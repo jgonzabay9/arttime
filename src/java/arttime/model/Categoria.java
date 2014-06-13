@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Software desarrollado bajo requerimientos de ByPhone,
  * entregado con licencia GNU GPL Version 3
  * Para más información sobre la licencia visitar http://www.gnu.org/licenses/gpl-3.0.html
@@ -22,6 +22,7 @@ public class Categoria implements Serializable {
      * Todas las clases de un proyecto Web basado en sesiones deben ser serializadas 
      */
 
+    private int idCategoria;        //ID de la categoría
     private String nombreCategoria; //Nombre de la categoría
 
     /**
